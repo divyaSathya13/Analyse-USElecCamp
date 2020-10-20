@@ -1,0 +1,84 @@
+## Missing value treatment ##
+
+# load and summarize the dataset
+
+from numpy import nan
+from pandas import read_csv
+
+# load the dataset
+dataset = read_csv('filename.csv', header=None)
+
+# summarize the dataset
+print(dataset.describe())
+
+dataset.replace(0, nan)
+print(dataset.isnull().sum())
+
+# count the number of NaN values in each column
+print('Missing: %d' % isnan(transformed_values).sum())
+
+# drop rows with missing values
+dataset.dropna(inplace=True)
+
+# fill missing values with mean column values
+dataset.fillna(dataset.mean(), inplace=True)
+
+## https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/
+
+## Dimensionality reduction ##
+
+# import required libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# read the data
+train=pd.read_csv("filename.csv")
+
+# checking the percentage of missing values in each variable
+train.isnull().sum()/len(train)*100
+
+# saving missing values in a variable
+a = train.isnull().sum()/len(train)*100
+# saving column names in a variable
+variables = train.columns
+variable = [ ]
+for i in range(0,12):
+    if a[i]<=20:   #setting the threshold as 20%
+        variable.append(variables[i])
+
+train['Item_Weight'].fillna(train['Item_Weight'].median(), inplace=True)
+train['Outlet_Size'].fillna(train['Outlet_Size'].mode()[0], inplace=True)
+
+train.isnull().sum()/len(train)*100
+
+train.var()
+
+## Low variance filter - When variance of attribute is low, it is likely to contribute very little to our model, 
+## so we can safely drop that column and reduce the dimension of the dataset
+
+## Get list of colums with variance greater than 10%:
+
+numeric = train[['col1', 'col2', 'coln']]
+var = numeric.var()
+numeric = numeric.columns
+variable = [ ]
+for i in range(0,len(var)):
+    if var[i]>=10:   #setting the threshold as 10%
+       variable.append(numeric[i+1])
+       
+## High Correlation Filter ##
+
+## High correlation between two variables means they have similar trends and are 
+## likely to carry similar information. This can bring down the performance of some 
+## models drastically (linear and logistic regression models, for instance).
+
+df=train.drop('Item_Outlet_Sales', 1)
+df.corr()
+
+## Random Forest ##
+## Backward Feature Elemination ##
+## Forward Feature Selection ##
+## Factor Analysis ##
+## Principal Component Analysis ##
+## Independent Component Analysis ##
