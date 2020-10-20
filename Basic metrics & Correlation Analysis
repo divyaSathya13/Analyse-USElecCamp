@@ -1,0 +1,102 @@
+###Analyzing Basic Metrics###
+
+##Load the dataset
+import pandas as pd
+data = pd.read_csv("filename.csv”, header=None)
+
+##Describing the data
+dataset.describe()
+
+#Returns summary statistics that exclude NaN values.
+#Returns the count, mean, standard deviation, minimum and maximum values and the quantiles of the data.
+
+
+
+##First and last rows 
+#Gives a general feel/understanding of the dataset, it’s attributes and the range.
+
+#Inspect the first 5 rows
+first = dataset.head(5)
+
+# Inspect the last 5 rows
+last = dataset.tail(5)
+
+
+
+####Sampling of Data####
+
+#If the dataset is large,it gives a better feel of the data values that head() and tail()
+
+dataset.sample(n) #n is the sample size
+
+##Alternatively, we could create a random index and then get random rows from your DataFrame
+##The code below makes use the random package
+##The sample module will allow you to sample your data, in combination with range() and len()
+
+
+from random import sample
+# Create a random index
+randomIndex = np.array(sample(range(len(dataset)), n)) #n is sample size
+
+# Get 5 random rows
+d_Sample = dataset.ix[randomIndex]
+
+# Print the sample
+print(d_Sample)
+
+
+
+###Queries###
+
+##query() function allows you to test some very simple hypotheses that you have about your data
+
+   dataset.query(“hypothesis”)
+
+#Hypothesis1: ‘Party =”D”’; will return all the candidates belonging to  Democratic 
+#Hypothesis2: ‘contributor_name = “William G Crook”’; will return all the contributions made my said contributor over the years, in all the different formats of the election
+
+
+
+
+####Correlation Analysis####
+
+##A scatter plot is a good way to visualize the data after reduction of the dataset
+##It allows you to identify a relationship between the two features that you have gained from the Dimensionality reduction
+
+ import matplotlib.pyplot as plt
+ plt.scatter(reduced_data[:,0], reduced_data[:,1], c=labels, cmap = 'viridis')
+ plt.show()
+
+
+
+###Quantitative Correlation Analysis###
+
+#The Kendall Tau correlation is a coefficient that represents the degree of concordance between two columns of ranked data. 
+#The Spearman correlation to measure the degree of association between two variables.
+
+# Pearson correlation
+dataset.corr()
+
+# Kendall Tau correlation
+dataset.corr('kendall')
+
+# Spearman Rank correlation
+dataset.corr('spearman')
+
+
+##Correlation heatmaps contain the same information in a visually appealing way
+##They show in a glance which variables are correlated, to what degree, in which direction, and alerts us to potential multicollinearity problems
+
+import pandas as pd
+import seaborn as sn
+import matplotlib.pyplot as plt
+
+data = = pd.read_csv("filename.csv”, header=None)
+df = pd.DataFrame(data,columns=['A','B','C'])
+
+corrMatrix = df.corr()
+sn.heatmap(corrMatrix, annot=True)
+plt.show()
+
+#A heatmap is a two-dimensional graphical representation of data where the individual values that are contained in a matrix are represented as colors.
+#Seaborn python package allows the creation of annotated heatmaps which can be tweaked using Matplotlib tools as per the creator's requirement
